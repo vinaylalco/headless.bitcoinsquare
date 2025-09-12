@@ -466,6 +466,35 @@ export interface ApiLessonPlanLessonPlan extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiNewsletterSubListNewsletterSubList
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'newsletter_sub_lists';
+  info: {
+    displayName: 'NewsletterSubList';
+    pluralName: 'newsletter-sub-lists';
+    singularName: 'newsletter-sub-list';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::newsletter-sub-list.newsletter-sub-list'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    subscribers: Schema.Attribute.JSON;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -1014,6 +1043,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::lesson-plan.lesson-plan': ApiLessonPlanLessonPlan;
+      'api::newsletter-sub-list.newsletter-sub-list': ApiNewsletterSubListNewsletterSubList;
       'api::product.product': ApiProductProduct;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
